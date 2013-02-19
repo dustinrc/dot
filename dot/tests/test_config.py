@@ -32,3 +32,12 @@ class CurrentTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
+    def test_updates(self):
+        expected = {
+            'rc': '/some/path/dotrc',
+            'repo': '/another/path/dot_repo',
+        }
+        actual = self.config.current(**expected)
+
+        self.assertEqual(expected, actual)
+

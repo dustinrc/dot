@@ -32,5 +32,6 @@ class Config(Command):
         are given, it will update the current dictionary before returning it.
         """
 
+        self._current.update(kwargs)
         return self._current
 

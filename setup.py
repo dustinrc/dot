@@ -45,7 +45,7 @@ setup(
     install_requires=install_requires,
     provides=['dot'],
     platforms=['Any'],
-    include_package_date=False,
+    include_package_data=False,
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Operating System :: OS Independent',

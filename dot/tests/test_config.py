@@ -8,6 +8,7 @@
 
 """
 
+import mock
 import unittest
 
 import os
@@ -19,12 +20,15 @@ class DefaultsTest(unittest.TestCase):
     """Config defaults are correct"""
 
     def setUp(self):
-        os.environ['HOME'] = '/tmp'
-        self.defaults = Config.defaults()
+        with mock.patch.dict('os.environ', {'HOME': '/tmp'}):
+            self.config = Config(None, None)
 
-    def test_rc(self):
-        self.assertEqual(self.defaults['rc'], '/tmp/.dotrc')
+    def test_no_kwargs(self):
+        expected = {
+            'rc': '/tmp/.dotrc',
+            'repo': '/tmp/.dot',
+        }
+        actual = self.config.defaults()
 
-    def test_repo(self):
-        self.assertEqual(self.defaults['repo'], '/tmp/.dot')
+        self.assertEqual(expected, actual)
 

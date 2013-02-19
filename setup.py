@@ -26,6 +26,7 @@ except IOError as e:
 install_requires = [
     'cliff',
     'vcs',
+    'mock',
 ]
 
 

@@ -11,7 +11,7 @@
 
 import os
 import sys
-from setuptools import setup, find_packages
+from setuptools import Command, setup, find_packages
 
 
 dot = __import__('dot')
@@ -28,6 +28,24 @@ install_requires = [
     'vcs',
     'mock',
 ]
+
+
+class CleanSDist(Command):
+    description = "Remove traces of setup.py sdist"
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        import glob
+        import shutil
+        shutil.rmtree('dist', True)
+        for each_dir in glob.glob(os.path.join('.', '*egg*info*')):
+            shutil.rmtree(each_dir, True)
 
 
 setup(
@@ -49,11 +67,12 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Operating System :: OS Independent',
-	'Programming Language :: Python',
-	'Programming Language :: Python :: 2',
-	'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
         'Intended Audience :: Developers',
         'Environment :: Console',
     ],
-    entry_points={}
+    entry_points={},
+    cmdclass={'clean_sdist': CleanSDist}
 )

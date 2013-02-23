@@ -20,8 +20,10 @@ class Config(Command):
     def __init__(self, app, app_args):
         super(Config, self).__init__(app, app_args)
         self._current = {
-            'rc': os.path.abspath(os.path.join(os.environ['HOME'], '.dotrc')),
-            'repo': os.path.abspath(os.path.join(os.environ['HOME'], '.dot')),
+            'config': os.path.abspath(os.path.join(os.environ['HOME'],
+                                                   '.dotrc')),
+            'local': os.path.abspath(os.path.join(os.environ['HOME'], '.dot')),
+            'remote': '',
         }
 
     def take_action(self, parsed_args):

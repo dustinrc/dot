@@ -25,8 +25,9 @@ class CurrentTest(unittest.TestCase):
 
     def test_defaults(self):
         expected = {
-            'rc': '/tmp/.dotrc',
-            'repo': '/tmp/.dot',
+            'config': '/tmp/.dotrc',
+            'local': '/tmp/.dot',
+            'remote': '',
         }
         actual = self.config.current()
 
@@ -34,8 +35,9 @@ class CurrentTest(unittest.TestCase):
 
     def test_updates(self):
         expected = {
-            'rc': '/some/path/dotrc',
-            'repo': '/another/path/dot_repo',
+            'config': '/some/path/dotrc',
+            'local': '/another/path/dot_repo',
+            'remote': 'https://github.com/dustinrc/dotfiles.git',
         }
         actual = self.config.current(**expected)
 

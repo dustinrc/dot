@@ -33,10 +33,7 @@ class Config(Command):
     def create(self):
         """Creates any files or directories needed by default."""
 
-        if exists(self._current['config']):
-            return
-
-        else:
+        if not exists(self._current['config']):
             with open(self._current['config'], 'w') as f:
                 dump(self._current, f)
 

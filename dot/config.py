@@ -9,7 +9,8 @@
 """
 
 
-import os
+from os import environ
+from os.path import abspath, join as op_join
 
 from cliff.command import Command
 
@@ -20,9 +21,8 @@ class Config(Command):
     def __init__(self, app, app_args):
         super(Config, self).__init__(app, app_args)
         self._current = {
-            'config': os.path.abspath(os.path.join(os.environ['HOME'],
-                                                   '.dotrc')),
-            'local': os.path.abspath(os.path.join(os.environ['HOME'], '.dot')),
+            'config': abspath(op_join(environ['HOME'], '.dotrc')),
+            'local': abspath(op_join(environ['HOME'], '.dot')),
             'remote': '',
         }
 

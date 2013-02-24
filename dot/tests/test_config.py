@@ -11,9 +11,43 @@
 import mock
 import unittest
 
+import json
 import os
+import shutil
+import tempfile
 
 from dot.config import Config
+
+
+class CreateTest(unittest.TestCase):
+    """Creates new files or directories if needed"""
+
+    def setUp(self):
+        self.tempdir = tempfile.mkdtemp()
+        with mock.patch.dict('os.environ', {'HOME': self.tempdir}):
+            self.config = Config(None, None)
+
+    def tearDown(self):
+        shutil.rmtree(self.tempdir)
+
+    def test_no_config_exists(self):
+        self.config.create()
+
+        with open(self.config.current()['config']) as f:
+            config = json.load(f)
+
+            self.assertEqual(self.config.current(), config)
+
+    def test_config_exists(self):
+        with open(self.config.current()['config'], 'w') as f:
+            f.write('{"config": "myconf", "local": "myrepo", "remote": ""}\n')
+
+        self.config.create()
+
+        with open(self.config.current()['config']) as f:
+            config = json.load(f)
+
+            self.assertNotEqual(self.config.current(), config)
 
 
 class CurrentTest(unittest.TestCase):

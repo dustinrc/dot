@@ -9,8 +9,9 @@
 """
 
 
+from json import dump
 from os import environ
-from os.path import abspath, join as op_join
+from os.path import abspath, exists, join as op_join
 
 from cliff.command import Command
 
@@ -28,6 +29,16 @@ class Config(Command):
 
     def take_action(self, parsed_args):
         return NotImplemented
+
+    def create(self):
+        """Creates any files or directories needed by default."""
+
+        if exists(self._current['config']):
+            return
+
+        else:
+            with open(self._current['config'], 'w') as f:
+                dump(self._current, f)
 
     def current(self, **kwargs):
         """Returns the current configurations.  If keyword arguments
